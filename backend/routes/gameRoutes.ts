@@ -3,39 +3,6 @@ import { getAccessToken } from "../src/igdb.js";
 
 const router = express.Router();
 
-// router.get("/search", async (req, res) => {
-//     try {
-//         const search = req.query.search;
-
-//         const token = await getAccessToken();
-
-//         const response = await fetch(
-//             "https://api.igdb.com/v4/games",
-//             {
-//                 method: "POST",
-//                 headers: {
-//                     "Client-ID": process.env.TWITCH_CLIENT_ID!,
-//                     "Authorization": `Bearer ${token}`,
-//                     "Content-Type": "text/plain"
-//                 },
-//                 body: `
-//                     fields name, cover.url, first_release_date, genres.name;
-//                     search "${search}";
-//                     limit 1;
-//                 `
-//             }
-//         );
-
-//         const games = await response.json();
-
-//         res.json(games);
-
-//     } catch (error) {
-//         console.error(error);
-//         res.status(500).json({ error: "Failed to fetch games" });
-//     }
-// });
-
 router.get("/popularGames", async (req, res) => {
     try {
         const search = req.query.search;

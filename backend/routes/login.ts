@@ -1,14 +1,49 @@
+
 import { Router } from "express";
+import pool from "../src/db.js";
+import bcrypt from "bcrypt";
 
 const loginRoute = Router();
 
 loginRoute.post("/", async (req, res) => {
-    const { username, password } = req.body;
+    try {
+        const { username, password } = req.body;
 
-    console.log(username);
-    console.log(password);
+        const foundUser = await pool.query(
+            "SELECT * FROM users WHERE username = $1",
+            [username]
+        );
 
-    res.json({ message: "Login request received" });
+        if (foundUser.rows.length === 0) {
+            return res.status(404).json({
+                message: "Username does NOT exist"
+            });
+        }
+
+        const userPw = foundUser.rows[0].password;
+
+        const passwordMatch = await bcrypt.compare(
+            password,
+            userPw
+        );
+
+        if (!passwordMatch) {
+            return res.status(401).json({
+                message: "Incorrect password"
+            });
+        }
+
+        return res.json({
+            message: "Login successful"
+        });
+
+    } catch (error) {
+        console.error(error);
+
+        return res.status(500).json({
+            message: "Internal server error"
+        });
+    }
 });
 
 export default loginRoute;
