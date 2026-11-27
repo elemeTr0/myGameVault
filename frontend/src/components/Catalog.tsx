@@ -18,7 +18,7 @@ type CardProp = {
 
 export default function Catalog({ games }: CatalogProp) {
 
-    const filteredGames = games.filter(r => isNaN(r.rating) === false)
+    const filteredGames = games.filter(r => isNaN(r.rating) === false && (r.cover))
 
     return (
         <div className="displayGames">

@@ -55,7 +55,7 @@ router.get("/popularGames", async (req, res) => {
                     fields id, name, cover.image_id, rating, artworks.image_id;
                     where rating_count > 10;
                     sort rating_count desc;
-                    limit 10;
+                    limit 1;
                 `
             }
         );
