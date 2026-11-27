@@ -70,4 +70,42 @@ router.get("/popularGames", async (req, res) => {
     }
 });
 
+router.get("/search", async (req, res) => {
+    try {
+        const searchValue = req.query.q as string;
+
+
+if (!searchValue?.trim()) {
+    return res.redirect("/popularGames");
+}
+
+        const token = await getAccessToken();
+
+        const response = await fetch(
+            "https://api.igdb.com/v4/games",
+            {
+                method: "POST",
+                headers: {
+                    "Client-ID": process.env.TWITCH_CLIENT_ID!,
+                    "Authorization": `Bearer ${token}`,
+                    "Content-Type": "text/plain"
+                },
+                 body: `
+                    fields id, name, cover.image_id, rating, artworks.image_id;
+                    where name ~ *"${searchValue}"*;
+                    sort rating desc;
+                `
+            }
+        );
+
+        const games = await response.json();
+
+        res.json(games);
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Failed to fetch games" });
+    }
+});
+
 export default router;

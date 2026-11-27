@@ -17,24 +17,33 @@ type CardProp = {
 };
 
 export default function Catalog({ games }: CatalogProp) {
+
+    const filteredGames = games.filter(r => isNaN(r.rating) === false)
+
     return (
-        <>
-            {games.map((game) => (
+        <div className="displayGames">
+            {filteredGames.map((game) => (
                 <Card key={game.id} game={game} />
             ))}
-        </>
+        </div>
     );
 }
 
 export function Card({ game }: CardProp) {
 
-    const rating = Math.ceil(game.rating)/10
+    const rating = Math.ceil(Number(game.rating))/10
+    console.log(game.name + rating)
+
     return (
         <div className="gameCard">
-<img
-  src={`https://images.igdb.com/igdb/image/upload/t_cover_big/${game.cover.image_id}.jpg`}
-  alt={game.name}
-/>        <h2>{game.name}</h2>
+{game.cover?.image_id ? (
+    <img
+        src={`https://images.igdb.com/igdb/image/upload/t_cover_big/${game.cover.image_id}.jpg`}
+        alt={game.name}
+    />
+) : (
+    <div className="no-cover">No cover available</div>
+)}        <h2>{game.name}</h2>
             <p>{rating.toFixed(1)}</p>
         </div>
     );
