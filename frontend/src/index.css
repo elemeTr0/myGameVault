@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&display=swap');
+
+:root {
+    --bg-main: #0B0B10;
+    --bg-card: #15151E;
+    --bg-card-hover: #1C1A29;
+
+    --border: #292638;
+    --border-hover: #A78BFA;
+
+    --accent: #A78BFA;
+    --accent-hover: #7C3AED;
+    --accent-glow: rgba(167, 139, 250, 0.15);
+
+    --text-primary: #F1F0F5;
+    --text-secondary: #92909F;
+
+    --card-radius: 12px;
+    --transition: 0.2s ease;
+}
+
+body {
+    background-color: var(--bg-main);
+    margin: 0;
+    overflow-x: hidden;
+    font-family: 'Rajdhani', sans-serif;
+    color: var(--text-primary);
+}
+
+#viewport {
+    padding: 30px;
+}
+
+.displayGames {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 15rem);
+    justify-content: space-between;
+    gap: 1em;
+}
+
+.gameCard {
+    background: var(--bg-card);
+    color: var(--text-primary);
+    width: 15rem;
+    border: 1px solid var(--border);
+    border-radius: var(--card-radius);
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+
+    transition: transform var(--transition),
+                border-color var(--transition),
+                background var(--transition);
+}
+
+.gameCard:hover {
+    transform: translateY(-5px);
+    border-color: var(--border-hover);
+    background: var(--bg-card-hover);
+    box-shadow: 0 8px 25px var(--accent-glow);
+}
+
+.gameCard img {
+    width: 100%;
+    height: 12rem;
+    object-fit: cover;
+}
+
+.gameCard h2 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin: 0;
+    color: var(--text-primary);
+}
+
+.gameCard p {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+.gameCardInfo {
+    padding: 0.8rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.gameCard .rating {
+    color: var(--accent);
+    font-weight: 700;
+}
