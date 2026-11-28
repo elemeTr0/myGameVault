@@ -2,6 +2,13 @@
 import { Router } from "express";
 import pool from "../src/db.js";
 import bcrypt from "bcrypt";
+import "express-session";
+
+declare module "express-session" {
+    interface SessionData {
+        userId: number;
+    }
+}
 
 const loginRoute = Router();
 
@@ -32,6 +39,8 @@ loginRoute.post("/", async (req, res) => {
                 message: "Incorrect password"
             });
         }
+
+        req.session.userId = foundUser.rows[0].id;
 
         return res.json({
             message: "Login successful"

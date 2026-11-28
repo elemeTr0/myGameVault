@@ -4,6 +4,7 @@ export default function Signup() {
     const [username, setUser] = useState("");
     const [password, setPw] = useState("");
     const [cpassword, setCPw] = useState("");
+    const [error, setError] = useState("")
 
     async function handleLogin() {
         const response = await fetch("http://localhost:5000/signup", {
@@ -20,12 +21,19 @@ export default function Signup() {
 
         const data = await response.json();
 
+        if (!response.ok) {
+        setError(data.message);
+        return;
+    }
+
+    setError("");
+
         console.log(data);
     }
     return (
         <div>
             <a href={"/"}>Escape hatch placeholder</a>
-
+            <p style={{ color: "red" }}>{error}</p>
             <label>Username</label>
             <input
                 type="text"
@@ -35,14 +43,14 @@ export default function Signup() {
             ></input>
             <label>Password</label>
             <input
-                type="text"
+                type="password"
                 placeholder="GameVaultPW"
                 value={password}
                 onChange={(e) => setPw(e.target.value)}
             ></input>
             <label>Confirm Password</label>
             <input
-                type="text"
+                type="password"
                 placeholder="Confirm GameVaultPW"
                 value={cpassword}
                 onChange={(e) => setCPw(e.target.value)}
